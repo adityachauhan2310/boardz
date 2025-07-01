@@ -2,7 +2,6 @@
 
 BoardZ is a powerful, self-hosted project management tool inspired by Trello, Jira, and other kanban-style applications. It allows teams to organize tasks, track progress, and collaborate effectively.
 
-![BoardZ Screenshot](assets/demo.gif)
 
 ## Features
 
@@ -23,7 +22,7 @@ The easiest way to get started is using Docker:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/boardz.git
+git clone https://github.com/adityachauhan2310/boardz.git
 cd boardz
 
 # Start the application using Docker Compose
@@ -44,7 +43,7 @@ The application will be available at http://localhost:1337.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/boardz.git
+   git clone https://github.com/adityachauhan2310/boardz.git
    cd boardz
    ```
 

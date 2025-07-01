@@ -1,0 +1,14 @@
+version: '3.9'
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+     - POSTGRES_DB=boardz
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=boardzdb2310
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+volumes:
+  db-data:

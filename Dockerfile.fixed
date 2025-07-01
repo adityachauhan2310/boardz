@@ -1,0 +1,67 @@
+FROM node:18-alpine
+
+# Install build dependencies
+RUN apk add --no-cache python3 make g++ build-base bash netcat-openbsd
+
+# Set up working directories
+WORKDIR /app
+
+# Copy package.json files first for better caching
+COPY package.json .
+COPY client/package.json client/
+COPY client/patches/ client/patches/
+COPY server/package.json server/package-lock.json server/
+COPY server/patches/ server/patches/
+
+# Install server dependencies
+WORKDIR /app/server
+
+# Fix the setup-python script - create an empty requirements.txt file first
+RUN echo "" > requirements.txt
+
+RUN npm install --ignore-scripts
+RUN npm rebuild bcrypt --build-from-source
+RUN npm rebuild lodepng --build-from-source
+RUN npm rebuild --build-from-source
+
+# Install client dependencies
+WORKDIR /app/client
+COPY client .
+RUN npm install --ignore-scripts
+
+# Install root dependencies
+WORKDIR /app
+RUN npm install --ignore-scripts
+
+# Copy source code
+COPY server /app/server
+
+# Build client
+WORKDIR /app/client
+RUN npm run build
+
+# Create required directories
+RUN mkdir -p /app/server/public/user-avatars \
+    /app/server/public/background-images \
+    /app/server/private/attachments \
+    /app/server/public/favicons \
+    /app/server/public/preloaded-favicons
+
+# Copy client build to server public directory
+RUN cp -r dist/* /app/server/public/
+RUN mkdir -p /app/server/views
+RUN cp dist/index.html /app/server/views/
+
+# Copy and setup entrypoint script
+COPY docker-entrypoint.sh /app/
+RUN chmod +x /app/docker-entrypoint.sh
+
+# Set working directory to server for startup
+WORKDIR /app
+
+# Expose port
+EXPOSE 1337
+
+# Start the server
+ENV NODE_ENV=production
+CMD ["/app/docker-entrypoint.sh"]

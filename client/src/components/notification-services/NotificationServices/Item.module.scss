@@ -1,0 +1,17 @@
+:global(#app) {
+  .button {
+    margin: 0 0 0 8px;
+  }
+
+  .field {
+    flex: auto;
+
+    input {
+      width: auto;
+    }
+  }
+
+  .wrapper {
+    display: flex;
+  }
+}

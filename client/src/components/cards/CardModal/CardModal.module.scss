@@ -1,0 +1,23 @@
+:global(#app) {
+  @mixin smallScreen {
+    margin: 1rem auto;
+    width: 95%;
+  }
+
+  .wrapper {
+    margin: 2rem auto;
+    width: 880px;
+
+    @media (width < 926px) {
+      @include smallScreen;
+    }
+  }
+
+  .wrapperStory {
+    width: 980px;
+
+    @media (width < 1026px) {
+      @include smallScreen;
+    }
+  }
+}

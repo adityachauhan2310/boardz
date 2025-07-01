@@ -1,0 +1,45 @@
+version: '3.9'
+services:
+  iq-boardz:
+    image: aditya2310chauhan/boardz:latest
+    build:
+      context: .
+      dockerfile: Dockerfile.fixed
+    ports:
+      - "1337:1337"
+    environment:
+      - DATABASE_URL=postgresql://admin:boardzdb2310@db/boardz
+      - BASE_URL=http://localhost:1337
+      - SECRET_KEY=7LC9MiW7WjdKK3k3XI15esDHvJdw9luoX6w/sP5t3XI=
+      - DEFAULT_ADMIN_EMAIL=admin@example.com
+      - DEFAULT_ADMIN_PASSWORD=admin2310
+      - DEFAULT_ADMIN_NAME=Admin User
+      - DEFAULT_ADMIN_USERNAME=admin
+    volumes:
+      - ./data/user-avatars:/app/server/public/user-avatars
+      - ./data/background-images:/app/server/public/background-images
+      - ./data/attachments:/app/server/private/attachments
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=boardz
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=boardzdb2310
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d boardz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db-data:

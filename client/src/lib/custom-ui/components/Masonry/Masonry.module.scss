@@ -1,0 +1,18 @@
+.lineBreak {
+  flex-basis: 100%;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 0 !important;
+}
+
+.wrapper {
+  align-content: flex-start;
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: column wrap;
+  width: 100%;
+
+  & > * {
+    box-sizing: border-box;
+  }
+}

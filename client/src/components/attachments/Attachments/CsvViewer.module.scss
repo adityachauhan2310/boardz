@@ -1,0 +1,9 @@
+:global(#app) {
+  .wrapper {
+    background: #fff;
+    border: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+}

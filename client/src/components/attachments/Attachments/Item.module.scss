@@ -1,0 +1,24 @@
+:global(#app) {
+  .content {
+    bottom: 0;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .contentViewer {
+    height: 90%;
+    width: MIN(90%, 1120px); // https://github.com/sass/node-sass/issues/2815
+  }
+
+  .contentError {
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
+    height: 20px;
+    text-align: center;
+    width: 470px;
+  }
+}

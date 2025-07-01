@@ -1,0 +1,42 @@
+FROM node:18-alpine
+
+# Install build dependencies
+RUN apk add --no-cache python3 make g++ build-base bash
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+COPY client/package*.json ./client/
+COPY client/patches/ ./client/patches/
+COPY server/package*.json ./server/
+COPY server/patches/ ./server/patches/
+
+# Install dependencies
+RUN npm install
+RUN cd client && npm install
+RUN cd server && npm install
+
+# Copy source code
+COPY . .
+
+# Build client
+RUN cd client && npm run build
+
+# Create directories for volumes
+RUN mkdir -p ./server/public/user-avatars \
+    ./server/public/background-images \
+    ./server/private/attachments
+
+# Copy client build to server
+RUN cp -r client/dist/* server/public/
+RUN mkdir -p server/views
+RUN cp client/dist/index.html server/views/
+
+# Expose port
+EXPOSE 1337
+
+# Start the application
+WORKDIR /app/server
+CMD ["npm", "run", "start:prod"]

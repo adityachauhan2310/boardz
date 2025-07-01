@@ -1,0 +1,21 @@
+:global(#app) {
+  .addItem {
+    display: flex;
+  }
+
+  .button {
+    margin: 0 0 0 8px;
+  }
+
+  .field {
+    flex: auto;
+
+    input {
+      width: auto;
+    }
+  }
+
+  .item:not(:last-child) {
+    margin-bottom: 12px;
+  }
+}

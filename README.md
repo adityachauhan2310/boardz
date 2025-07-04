@@ -127,12 +127,3 @@ BoardZ can be configured using environment variables. See the sample `.env` file
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## Acknowledgments
-
-- This project is a customized version of the Planka project
-- Icons by Font Awesome
-- UI components by Semantic UI React
